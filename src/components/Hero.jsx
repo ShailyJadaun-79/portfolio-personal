@@ -23,23 +23,23 @@ const Hero = () => {
 
         {/* Summary Description */}
         <p className="max-w-2xl text-lg md:text-xl text-secondaryText leading-relaxed mb-10 font-normal">
-          Detail-oriented BCA graduate blending analytical thinking with intuitive UI/UX principles. 
-          Specializing in transforming raw business data into actionable dashboard insights, 
+          Detail-oriented BCA graduate blending analytical thinking with intuitive UI/UX principles.
+          Specializing in transforming raw business data into actionable dashboard insights,
           and crafting clean, user-centered digital interfaces.
         </p>
 
         {/* Call to Actions */}
         <div className="flex flex-col sm:flex-row gap-4">
-          <a 
-            href="#projects" 
+          <a
+            href="#projects"
             className="group inline-flex items-center justify-center gap-2 bg-accent text-white font-medium px-8 py-3.5 rounded shadow-sm hover:bg-blue-700 transition duration-200"
           >
-            View Projects 
+            View Projects
             <FaArrowRight className="text-sm group-hover:translate-x-1 transition-transform" />
           </a>
-          <a 
-            href="/ShailyJadaun_DataAnalytics_Resume.pdf" 
-            download 
+          <a
+            href="/resume.pdf"
+            download
             className="inline-flex items-center justify-center border border-slate-200 bg-surface text-secondaryText hover:text-accent hover:border-accent hover:bg-blue-50/20 font-medium px-8 py-3.5 rounded transition duration-200 shadow-sm"
           >
             Download Resume
