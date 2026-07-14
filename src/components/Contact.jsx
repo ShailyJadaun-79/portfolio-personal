@@ -6,6 +6,19 @@ const Contact = () => {
   const form = useRef();
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
+  const [formFields, setFormFields] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormFields((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -17,11 +30,12 @@ const Contact = () => {
     const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID';
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY';
 
-    const formData = new FormData(e.target);
     const templateParams = {
-      name: formData.get('name'),
-      email: formData.get('email'),
-      message: formData.get('message'),
+      name: formFields.name,
+      email: formFields.email,
+      reply_to: formFields.email,
+      from_email: formFields.email,
+      message: formFields.message,
       time: new Date().toLocaleString()
     };
 
@@ -34,7 +48,7 @@ const Contact = () => {
       .then((result) => {
         setStatus('Message sent successfully!');
         setLoading(false);
-        e.target.reset();
+        setFormFields({ name: '', email: '', message: '' });
       }, (error) => {
         setStatus('Failed to send message. Please verify your config or try again.');
         setLoading(false);
@@ -114,6 +128,8 @@ const Contact = () => {
                 <input
                   type="text"
                   name="name"
+                  value={formFields.name}
+                  onChange={handleInputChange}
                   required
                   placeholder="John Doe"
                   className="w-full bg-background border border-slate-200 p-3 rounded-xl focus:outline-none focus:border-accent focus:bg-white text-sm transition duration-200"
@@ -125,6 +141,8 @@ const Contact = () => {
                 <input
                   type="email"
                   name="email"
+                  value={formFields.email}
+                  onChange={handleInputChange}
                   required
                   placeholder="yourmail@example.com"
                   className="w-full bg-background border border-slate-200 p-3 rounded-xl focus:outline-none focus:border-accent focus:bg-white text-sm transition duration-200"
@@ -135,6 +153,8 @@ const Contact = () => {
                 <label className="text-xs font-bold uppercase tracking-wider text-secondaryText block mb-2">Message</label>
                 <textarea
                   name="message"
+                  value={formFields.message}
+                  onChange={handleInputChange}
                   rows="5"
                   required
                   placeholder="Hi Shaily, let's discuss dashboard opportunities..."
