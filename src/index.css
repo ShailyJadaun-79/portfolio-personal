@@ -1,17 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #F8FAFC;
-  --color-surface: #FFFFFF;
-  --color-primaryText: #0F172A;
-  --color-secondaryText: #475569;
-  --color-accent: #2563EB;
+  --color-background: #030712;
+  --color-surface: #090a16;
+  --color-primaryText: #f8fafc;
+  --color-secondaryText: #94a3b8;
+  --color-accent: #a855f7;
+  --color-accentBlue: #3b82f6;
+  --color-accentCyan: #06b6d4;
+  --color-cardBg: rgba(13, 17, 39, 0.45);
+  --color-borderGlow: rgba(168, 85, 247, 0.2);
 }
 
 @layer base {
   body {
     @apply bg-background text-primaryText antialiased;
     font-family: 'Inter', sans-serif;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 0% 100%, rgba(168, 85, 247, 0.05) 0%, transparent 40%);
+    background-attachment: fixed;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Outfit', sans-serif;
@@ -22,27 +30,124 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Custom CSS micro-animations and scrollbar styling */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #F1F5F9;
+  background: #030712;
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: rgba(168, 85, 247, 0.15);
   border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.02);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: rgba(168, 85, 247, 0.3);
 }
 
-/* Premium micro-shadow transitions */
-.card-hover {
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+/* Glassmorphism Styles */
+.glass-panel {
+  background: rgba(13, 17, 39, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.card-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+.glass-panel-hover:hover {
+  transform: translateY(-4px);
+  background: rgba(18, 22, 49, 0.55);
+  border-color: rgba(168, 85, 247, 0.3);
+  box-shadow: 0 12px 30px -10px rgba(168, 85, 247, 0.15), 
+              0 0 20px -5px rgba(59, 130, 246, 0.1);
+}
+
+/* Gradient Utilities */
+.text-gradient-purple {
+  background: linear-gradient(135deg, #f8fafc 30%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-name {
+  background: linear-gradient(135deg, #ffffff 40%, #a855f7 70%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn-gradient {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Animation Keyframes */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-reverse-slow {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05);
+  }
+}
+
+/* Animation Classes */
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-spin-reverse-slow {
+  animation: spin-reverse-slow 25s linear infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 8s ease-in-out infinite;
+}
+

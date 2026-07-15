@@ -28,12 +28,13 @@ const Navbar = () => {
   return (
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
       isScrolled 
-        ? 'bg-surface/80 backdrop-blur-md border-b border-slate-100 shadow-sm py-4' 
+        ? 'bg-background/70 backdrop-blur-xl border-b border-white/5 py-4 shadow-lg shadow-black/20' 
         : 'bg-transparent py-6'
     }`}>
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
-        <a href="#about" className="text-xl font-bold tracking-tight text-primaryText hover:text-accent transition-colors">
-          Shaily<span className="text-accent">.</span>J
+        <a href="#about" className="text-xl font-bold tracking-tight text-primaryText hover:text-accent transition-colors flex items-center gap-1.5">
+          <span className="text-accent font-mono font-black">&lt;/&gt;</span>
+          <span>Shaily<span className="text-accent font-black">.</span>J</span>
         </a>
 
         {/* Desktop Navigation */}
@@ -42,14 +43,15 @@ const Navbar = () => {
             <a
               key={link.name}
               href={link.href}
-              className="text-sm font-medium text-secondaryText hover:text-accent transition-colors duration-200"
+              className="text-sm font-medium text-secondaryText hover:text-primaryText transition-colors duration-200 relative group py-1"
             >
               {link.name}
+              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full rounded-full"></span>
             </a>
           ))}
           <a
             href="#contact"
-            className="bg-accent text-white text-sm font-medium px-5 py-2.5 rounded hover:bg-blue-700 transition duration-200 shadow-sm"
+            className="border border-accent/40 bg-accent/10 hover:bg-accent/20 hover:border-accent hover:shadow-[0_0_15px_rgba(168,85,247,0.25)] text-primaryText text-sm font-semibold px-5 py-2 rounded-full transition-all duration-300"
           >
             Hire Me
           </a>
@@ -67,13 +69,13 @@ const Navbar = () => {
 
       {/* Mobile Navigation Panel */}
       {isOpen && (
-        <div className="md:hidden bg-surface border-b border-slate-100 shadow-lg absolute top-full left-0 w-full py-6 px-6 flex flex-col gap-4 animate-fadeIn">
+        <div className="md:hidden bg-background/95 backdrop-blur-2xl border-b border-white/5 shadow-2xl absolute top-full left-0 w-full py-6 px-6 flex flex-col gap-4 animate-fadeIn">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
               onClick={() => setIsOpen(false)}
-              className="text-base font-medium text-secondaryText hover:text-accent transition-colors py-2"
+              className="text-base font-medium text-secondaryText hover:text-primaryText transition-colors py-2 border-b border-white/5 last:border-0"
             >
               {link.name}
             </a>
@@ -81,7 +83,7 @@ const Navbar = () => {
           <a
             href="#contact"
             onClick={() => setIsOpen(false)}
-            className="bg-accent text-white text-center font-medium py-3 rounded hover:bg-blue-700 transition duration-200"
+            className="border border-accent/40 bg-accent/15 hover:bg-accent/25 hover:border-accent text-center font-semibold py-3 rounded-full transition-all duration-300 text-sm mt-2"
           >
             Hire Me
           </a>
