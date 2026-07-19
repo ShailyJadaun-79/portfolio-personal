@@ -113,8 +113,13 @@ const Hero = () => {
               <div className="absolute w-[60%] h-[60%] rounded-full bg-accent/10 blur-[40px] pointer-events-none -z-10 animate-pulse-glow"></div>
 
               {/* Central Glowing Shield */}
-              <div className="w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] rounded-full bg-gradient-to-tr from-accent/20 to-accentBlue/20 border-2 border-accent/30 flex items-center justify-center shadow-[0_0_30px_rgba(168,85,247,0.25)] relative z-10 animate-float-slow">
-                <FaCode className="text-3xl sm:text-4xl text-accent animate-pulse" />
+              <div className="w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] rounded-full bg-gradient-to-tr from-accent/20 to-accentBlue/20 border-2 border-accent/30 flex items-center justify-center shadow-[0_0_30px_rgba(168,85,247,0.25)] relative z-10 animate-float-slow overflow-hidden">
+                <img 
+                  src="/profile.jpg" 
+                  alt="Shaily Jadaun" 
+                  className="w-full h-full object-cover rounded-full"
+                  style={{ objectPosition: 'center 18%' }}
+                />
               </div>
 
               {/* Orbital Nodes */}
