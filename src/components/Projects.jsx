@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { FaExternalLinkAlt, FaChartLine, FaFilter, FaUsers, FaDatabase } from 'react-icons/fa';
+import { FaExternalLinkAlt, FaChartLine, FaUsers, FaDatabase } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const projects = [
   {
@@ -37,6 +38,19 @@ const Projects = () => {
 
   const filterOptions = ['All', 'Power BI', 'Excel', 'Power Query'];
 
+  const cardVariants = {
+    hidden: { opacity: 0, y: 35 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'spring',
+        stiffness: 85,
+        damping: 15
+      }
+    }
+  };
+
   return (
     <section id="projects" className="py-24 bg-transparent px-6 md:px-12 lg:px-24 relative">
       {/* Background glow blobs */}
@@ -46,7 +60,13 @@ const Projects = () => {
       <div className="max-w-6xl mx-auto relative z-10">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
+        >
           <div>
             <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
               Featured Projects <span className="inline-block w-2 h-2 rounded-full bg-accent ml-1"></span>
@@ -59,8 +79,10 @@ const Projects = () => {
           {/* Filters */}
           <div className="flex flex-wrap gap-2 self-start md:self-auto bg-white/5 p-1 rounded-full border border-white/5">
             {filterOptions.map((opt) => (
-              <button
+              <motion.button
                 key={opt}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setFilter(opt)}
                 className={`text-xs font-semibold px-4 py-2 rounded-full transition-all duration-300 cursor-pointer ${
                   filter === opt
@@ -69,73 +91,98 @@ const Projects = () => {
                 }`}
               >
                 {opt}
-              </button>
+              </motion.button>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {filteredProjects.map((proj, idx) => (
-            <div 
-              key={idx} 
-              className="glass-panel glass-panel-hover p-6 rounded-2xl flex flex-col justify-between"
-            >
-              <div>
-                {/* Simulated Mockup Header */}
-                <div className="relative w-full h-40 bg-slate-950/50 rounded-xl border border-white/5 flex items-center justify-center mb-6 overflow-hidden group/thumb">
-                  {/* Window dots */}
-                  <div className="absolute top-3.5 left-3.5 flex gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-500/50"></span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-yellow-500/50"></span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-green-500/50"></span>
-                  </div>
-                  {/* Category Tag */}
-                  <span className="absolute top-2.5 right-3 text-[9px] font-bold text-accent uppercase tracking-widest bg-accent/10 border border-accent/20 px-2 py-0.5 rounded-full">
-                    {proj.category}
-                  </span>
-                  {/* Pulsating background glow behind the icon */}
-                  <div className="absolute w-12 h-12 rounded-full bg-accent/10 blur-[15px] group-hover/thumb:bg-accent/20 transition-all duration-300"></div>
-                  {/* Floating centered icon */}
-                  <div className="text-3xl text-accent scale-100 group-hover/thumb:scale-110 transition-transform duration-300 relative z-10">
-                    {proj.icon}
-                  </div>
-                </div>
-
-                {/* Title */}
-                <h4 className="text-lg font-bold text-white mb-2.5 tracking-tight">{proj.title}</h4>
-                
-                {/* Tools Pills */}
-                <div className="flex flex-wrap gap-1.5 mb-5">
-                  {proj.tools.map((tool, tIdx) => (
-                    <span 
-                      key={tIdx} 
-                      className="bg-accent/5 border border-accent/10 text-slate-300 text-[10px] font-semibold px-2.5 py-0.5 rounded tracking-wide"
-                    >
-                      {tool}
+        <motion.div 
+          layout
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((proj) => (
+              <motion.div 
+                layout
+                key={proj.title}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+                viewport={{ once: true, margin: "-50px" }}
+                whileHover={{ 
+                  y: -8, 
+                  borderColor: 'rgba(168, 85, 247, 0.25)',
+                  backgroundColor: 'rgba(18, 22, 49, 0.55)',
+                  boxShadow: '0 20px 40px -15px rgba(168, 85, 247, 0.2), 0 0 20px -5px rgba(59, 130, 246, 0.1)'
+                }}
+                className="glass-panel p-6 rounded-2xl flex flex-col justify-between transition-colors duration-300 group"
+              >
+                <div>
+                  {/* Simulated Mockup Header */}
+                  <div className="relative w-full h-40 bg-slate-950/50 rounded-xl border border-white/5 flex items-center justify-center mb-6 overflow-hidden">
+                    {/* Window dots */}
+                    <div className="absolute top-3.5 left-3.5 flex gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-red-500/50"></span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-yellow-500/50"></span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500/50"></span>
+                    </div>
+                    {/* Category Tag */}
+                    <span className="absolute top-2.5 right-3 text-[9px] font-bold text-accent uppercase tracking-widest bg-accent/10 border border-accent/20 px-2 py-0.5 rounded-full">
+                      {proj.category}
                     </span>
-                  ))}
+                    {/* Pulsating background glow behind the icon */}
+                    <div className="absolute w-12 h-12 rounded-full bg-accent/10 blur-[15px] group-hover:bg-accent/25 group-hover:scale-125 transition-all duration-500"></div>
+                    {/* Floating centered icon */}
+                    <motion.div 
+                      whileHover={{ scale: 1.15, rotate: 5 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 10 }}
+                      className="text-3xl text-accent relative z-10 cursor-pointer"
+                    >
+                      {proj.icon}
+                    </motion.div>
+                  </div>
+
+                  {/* Title */}
+                  <h4 className="text-lg font-bold text-white mb-2.5 tracking-tight">{proj.title}</h4>
+                  
+                  {/* Tools Pills */}
+                  <div className="flex flex-wrap gap-1.5 mb-5">
+                    {proj.tools.map((tool, tIdx) => (
+                      <span 
+                        key={tIdx} 
+                        className="bg-accent/5 border border-accent/10 text-slate-300 text-[10px] font-semibold px-2.5 py-0.5 rounded tracking-wide"
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-secondaryText text-xs leading-relaxed mb-6">
+                    {proj.desc}
+                  </p>
                 </div>
 
-                {/* Description */}
-                <p className="text-secondaryText text-xs leading-relaxed mb-6">
-                  {proj.desc}
-                </p>
-              </div>
+                {/* Bottom Insights */}
+                <div className="pt-5 border-t border-white/5 flex items-center justify-between">
+                  <span className="text-xs font-semibold text-accent/80 italic">
+                    {proj.stats}
+                  </span>
+                  <motion.span 
+                    whileHover={{ scale: 1.05, color: '#ffffff' }}
+                    whileTap={{ scale: 0.95 }}
+                    className="text-accent text-xs font-bold cursor-pointer flex items-center gap-1.5 transition-colors duration-200"
+                  >
+                    View Specs <FaExternalLinkAlt className="text-[9px]" />
+                  </motion.span>
+                </div>
 
-              {/* Bottom Insights */}
-              <div className="pt-5 border-t border-white/5 flex items-center justify-between">
-                <span className="text-xs font-semibold text-accent/80 italic">
-                  {proj.stats}
-                </span>
-                <span className="text-accent hover:text-white text-xs font-bold cursor-pointer flex items-center gap-1.5 transition-colors duration-200">
-                  View Specs <FaExternalLinkAlt className="text-[9px]" />
-                </span>
-              </div>
-
-            </div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
 
       </div>
     </section>
